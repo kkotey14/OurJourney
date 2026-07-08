@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Journey Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3f2e8;
+      --ink: #1b1916;
+      --muted: #6a655c;
+      --red: #ef2f25;
+      --panel: #fffaf0;
+      --display: "Anton", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --play: "Mouse Memoirs", "Arial Narrow", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(239, 47, 37, 0.08), transparent 22rem),
+        radial-gradient(circle at 84% 12%, rgba(240, 182, 46, 0.14), transparent 22rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--play);
+    }
+
+    form {
+      width: min(440px, 100%);
+      display: grid;
+      gap: 14px;
+      border: 2px solid var(--red);
+      border-radius: 24px;
+      padding: 26px;
+      background: var(--panel);
+      box-shadow: 10px 10px 0 rgba(239, 47, 37, 0.18);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(3rem, 12vw, 5rem);
+      font-weight: 400;
+      line-height: 0.86;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.2rem;
+      line-height: 1.05;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--red);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      border: 2px solid rgba(27, 25, 22, 0.14);
+      border-radius: 12px;
+      padding: 11px 12px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    button {
+      border: 2px solid var(--red);
+      border-radius: 14px;
+      padding: 11px 14px;
+      background: var(--red);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <form method="post" action="/login">
+    <h1>Admin login</h1>
+    <p>Sign in to edit your journey page.</p>
+    <label>
+      Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>
+      Password
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <button type="submit">Log in</button>
+  </form>
+</body>
+</html>

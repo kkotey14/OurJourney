@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Journey Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3f2e8;
+      --ink: #1b1916;
+      --muted: #6a655c;
+      --red: #ef2f25;
+      --gold: #f0b62e;
+      --panel: #fffaf0;
+      --line: rgba(27, 25, 22, 0.14);
+      --display: "Anton", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --play: "Mouse Memoirs", "Arial Narrow", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(239, 47, 37, 0.08), transparent 22rem),
+        radial-gradient(circle at 84% 12%, rgba(240, 182, 46, 0.14), transparent 22rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--play);
+      font-size: 18px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 2px solid var(--red);
+      border-radius: 14px;
+      padding: 10px 14px;
+      background: var(--red);
+      color: #fff;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    button.secondary {
+      background: var(--panel);
+      color: var(--red);
+    }
+
+    button.danger {
+      border-color: var(--ink);
+      background: var(--ink);
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      line-height: 0.82;
+      text-transform: uppercase;
+    }
+
+    .panel {
+      border: 2px solid var(--red);
+      border-radius: 22px;
+      padding: clamp(18px, 3vw, 28px);
+      background: var(--panel);
+      box-shadow: 10px 10px 0 rgba(239, 47, 37, 0.18);
+    }
+
+    .editor h1,
+    .panel h2 {
+      margin: 0 0 14px;
+      color: var(--red);
+      font-family: var(--display);
+      font-weight: 400;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+
+    .help {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.1;
+    }
+
+    .grid,
+    .stop-form,
+    .photo-list,
+    .button-row {
+      display: grid;
+      gap: 12px;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.36fr) minmax(320px, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .trip-list,
+    .stop-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .select-button {
+      width: 100%;
+      text-align: left;
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .select-button.is-active {
+      border-color: var(--red);
+      background: var(--red);
+      color: #fff;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .thirds {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .photo-item {
+      display: grid;
+      grid-template-columns: 84px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .photo-item img {
+      width: 84px;
+      height: 84px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .status {
+      min-height: 22px;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      .topbar,
+      .editor-grid,
+      .split,
+      .thirds,
+      .photo-item {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="editor" aria-label="Journey editor">
+      <div class="topbar">
+        <div>
+          <div class="brand">Journey admin</div>
+          <p class="help">Edit, delete, and upload. Changes save to this browser and show on the main page after refresh.</p>
+        </div>
+        <div class="toolbar">
+          <a href="index.html"><button class="secondary" type="button">View site</button></a>
+          <a href="/logout"><button class="secondary" type="button">Log out</button></a>
+          <button class="secondary" type="button" id="exportButton">Export backup</button>
+          <button class="danger" type="button" id="resetButton">Reset all</button>
+        </div>
+      </div>
+
+      <div class="editor-grid">
+        <aside class="panel">
+          <h2>Routes</h2>
+          <div class="trip-list">
+            <button class="select-button is-active" type="button" data-trip="out-of-state">Out of state travel</button>
+            <button class="select-button" type="button" data-trip="in-state">In state (USA)</button>
+          </div>
+
+          <h2 style="margin-top: 24px;">Stops</h2>
+          <div class="stop-list" id="stopList"></div>
+          <button type="button" id="addStopButton">Add stop</button>
+        </aside>
+
+        <section class="panel">
+          <h1 id="editorTitle">Out of state travel</h1>
+          <div class="grid">
+            <div class="split">
+              <label>
+                Passport title
+                <input id="passportTitleInput">
+              </label>
+              <label>
+                Tags
+                <input id="tagsInput" placeholder="Dubai 2024, Photo stacks, Open slots">
+              </label>
+            </div>
+
+            <label>
+              Passport copy
+              <textarea id="passportCopyInput"></textarea>
+            </label>
+
+            <div class="split">
+              <label>
+                Stamps
+                <input id="stampsInput" placeholder="Dubai, Flights, Next trip">
+              </label>
+              <label>
+                Ending title
+                <input id="endingTitleInput">
+              </label>
+            </div>
+
+            <label>
+              Ending copy
+              <textarea id="endingCopyInput"></textarea>
+            </label>
+
+            <hr>
+
+            <div class="stop-form" id="stopForm">
+              <div class="split">
+                <label>
+                  Stop background word
+                  <input id="stopNameInput">
+                </label>
+                <label>
+                  Date
+                  <input id="dateInput">
+                </label>
+              </div>
+
+              <label>
+                Title
+                <input id="titleInput">
+              </label>
+
+              <label>
+                Description
+                <textarea id="copyInput"></textarea>
+              </label>
+
+              <div class="thirds">
+                <label>
+                  Place
+                  <input id="placeInput">
+                </label>
+                <label>
+                  Favorite
+                  <input id="favoriteInput">
+                </label>
+                <label>
+                  Mood
+                  <input id="moodInput">
+                </label>
+              </div>
+
+              <label>
+                <input id="placeholderInput" type="checkbox">
+                Use big question mark placeholder
+              </label>
+
+              <div class="photo-list" id="photoList"></div>
+              <div class="split">
+                <label>
+                  Add photo URL
+                  <input id="photoUrlInput" placeholder="https://...">
+                </label>
+                <label>
+                  Upload photo
+                  <input id="photoUploadInput" type="file" accept="image/*">
+                </label>
+              </div>
+              <button type="button" id="addPhotoButton">Add URL photo</button>
+            </div>
+
+            <div class="toolbar">
+              <button type="button" id="saveButton">Save changes</button>
+              <button class="secondary" type="button" id="duplicateButton">Duplicate stop</button>
+              <button class="danger" type="button" id="deleteStopButton">Delete stop</button>
+            </div>
+            <p class="status" id="saveStatus" role="status"></p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "ourJourneyTrips";
+    const defaultData = {
+      "out-of-state": {
+        tags: ["Dubai 2024", "Photo stacks", "Open slots"],
+        passportTitle: "Current passport",
+        passportCopy: "Three favorite stops, a few saved details, and room for every trip that comes next.",
+        stamps: ["Dubai", "Flights", "Next trip"],
+        endingTitle: "Next stop",
+        endingCopy: "Add the next trip here when you have the photos. The page is meant to grow one memory at a time.",
+        stops: [
+          {
+            stop: "Dubai",
+            date: "Dubai 2024",
+            title: "Dubai getaway",
+            copy: "Skyscraper views, warm nights, desert light, and the kind of city glow that makes every photo feel expensive.",
+            details: ["Dubai", "Desert", "Luxury"],
+            photos: [
+              {
+                src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=82",
+                alt: "A beach at sunset with waves rolling in"
+              },
+              {
+                src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=82",
+                alt: "A quiet road through a wide vacation landscape"
+              },
+              {
+                src: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1100&q=82",
+                alt: "A tropical beach with blue water"
+              }
+            ]
+          },
+          {
+            stop: "Next",
+            date: "Coming soon",
+            title: "?",
+            copy: "Journey not added yet. This spot is saved for the next place you two visit together.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          },
+          {
+            stop: "Soon",
+            date: "Coming soon",
+            title: "?",
+            copy: "Journey not added yet. Keep this card open until you have the next photos and memories.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          }
+        ]
+      },
+      "in-state": {
+        tags: ["In state USA", "Local dates", "Open slots"],
+        passportTitle: "Local passport",
+        passportCopy: "A separate lane for nearby weekends, favorite local spots, and easy trips that still deserve their own memories.",
+        stamps: ["Local", "Day trip", "Staycation"],
+        endingTitle: "Local next stop",
+        endingCopy: "Use this side for nearby cities, restaurants, parks, beaches, and any in-state trips you two want to save.",
+        stops: [
+          {
+            stop: "Local",
+            date: "In state",
+            title: "Local memory",
+            copy: "This is reserved for your first in-state trip. Add the photos, city, and favorite detail when you have it.",
+            details: ["Nearby", "Favorite spot", "Easy"],
+            placeholder: true
+          },
+          {
+            stop: "Weekend",
+            date: "Coming soon",
+            title: "?",
+            copy: "A future weekend close to home can live here, separate from the out-of-state travel route.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          },
+          {
+            stop: "Date",
+            date: "Coming soon",
+            title: "?",
+            copy: "Save this one for a local date day, a nearby city, or a place you keep going back to together.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          }
+        ]
+      }
+    };
+    let data = loadData();
+    let currentTrip = "out-of-state";
+    let currentStopIndex = 0;
+
+    const tripButtons = document.querySelectorAll("[data-trip]");
+    const stopList = document.getElementById("stopList");
+    const editorTitle = document.getElementById("editorTitle");
+    const saveStatus = document.getElementById("saveStatus");
+    const fields = {
+      passportTitle: document.getElementById("passportTitleInput"),
+      passportCopy: document.getElementById("passportCopyInput"),
+      tags: document.getElementById("tagsInput"),
+      stamps: document.getElementById("stampsInput"),
+      endingTitle: document.getElementById("endingTitleInput"),
+      endingCopy: document.getElementById("endingCopyInput"),
+      stop: document.getElementById("stopNameInput"),
+      date: document.getElementById("dateInput"),
+      title: document.getElementById("titleInput"),
+      copy: document.getElementById("copyInput"),
+      place: document.getElementById("placeInput"),
+      favorite: document.getElementById("favoriteInput"),
+      mood: document.getElementById("moodInput"),
+      placeholder: document.getElementById("placeholderInput")
+    };
+
+    function loadData() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(defaultData);
+      } catch {
+        return structuredClone(defaultData);
+      }
+    }
+
+    function saveData(message = "Saved") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      saveStatus.textContent = `${message}. Refresh the main site to see it.`;
+      window.setTimeout(() => {
+        saveStatus.textContent = "";
+      }, 3200);
+    }
+
+    function listFromInput(value) {
+      return value.split(",").map((item) => item.trim()).filter(Boolean);
+    }
+
+    function renderEditor() {
+      const trip = data[currentTrip];
+      const stop = trip.stops[currentStopIndex] || trip.stops[0];
+
+      editorTitle.textContent = currentTrip === "out-of-state" ? "Out of state travel" : "In state (USA)";
+      fields.passportTitle.value = trip.passportTitle;
+      fields.passportCopy.value = trip.passportCopy;
+      fields.tags.value = trip.tags.join(", ");
+      fields.stamps.value = trip.stamps.join(", ");
+      fields.endingTitle.value = trip.endingTitle;
+      fields.endingCopy.value = trip.endingCopy;
+      renderStopList();
+
+      if (stop) {
+        fields.stop.value = stop.stop || "";
+        fields.date.value = stop.date || "";
+        fields.title.value = stop.title || "";
+        fields.copy.value = stop.copy || "";
+        fields.place.value = stop.details?.[0] || "";
+        fields.favorite.value = stop.details?.[1] || "";
+        fields.mood.value = stop.details?.[2] || "";
+        fields.placeholder.checked = !!stop.placeholder;
+      }
+
+      renderPhotoList();
+    }
+
+    function renderStopList() {
+      const trip = data[currentTrip];
+      stopList.innerHTML = trip.stops.map((stop, index) => `
+        <button class="select-button ${index === currentStopIndex ? "is-active" : ""}" type="button" data-stop-index="${index}">
+          ${stop.title || "Untitled stop"}
+        </button>
+      `).join("");
+    }
+
+    function renderPhotoList() {
+      const stop = data[currentTrip].stops[currentStopIndex];
+      const photoList = document.getElementById("photoList");
+      const photos = stop.photos || [];
+
+      if (stop.placeholder || !photos.length) {
+        photoList.innerHTML = `<p class="help">This stop is using a question mark placeholder. Uncheck the placeholder box to add real photos.</p>`;
+        return;
+      }
+
+      photoList.innerHTML = photos.map((photo, index) => `
+        <div class="photo-item">
+          <img src="${photo.src}" alt="">
+          <label>
+            Photo alt text
+            <input data-photo-alt="${index}" value="${photo.alt || ""}">
+          </label>
+          <button class="danger" type="button" data-delete-photo="${index}">Delete</button>
+        </div>
+      `).join("");
+    }
+
+    function syncFormToData() {
+      const trip = data[currentTrip];
+      const stop = trip.stops[currentStopIndex];
+
+      trip.passportTitle = fields.passportTitle.value.trim();
+      trip.passportCopy = fields.passportCopy.value.trim();
+      trip.tags = listFromInput(fields.tags.value);
+      trip.stamps = listFromInput(fields.stamps.value);
+      trip.endingTitle = fields.endingTitle.value.trim();
+      trip.endingCopy = fields.endingCopy.value.trim();
+      stop.stop = fields.stop.value.trim() || "Stop";
+      stop.date = fields.date.value.trim();
+      stop.title = fields.title.value.trim() || "Untitled";
+      stop.copy = fields.copy.value.trim();
+      stop.details = [fields.place.value.trim(), fields.favorite.value.trim(), fields.mood.value.trim()];
+      stop.placeholder = fields.placeholder.checked;
+      if (stop.placeholder) {
+        delete stop.photos;
+      } else {
+        stop.photos = stop.photos || [];
+      }
+
+      document.querySelectorAll("[data-photo-alt]").forEach((input) => {
+        const index = Number(input.dataset.photoAlt);
+        if (stop.photos?.[index]) {
+          stop.photos[index].alt = input.value.trim();
+        }
+      });
+    }
+
+    renderEditor();
+
+    tripButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        syncFormToData();
+        currentTrip = button.dataset.trip;
+        currentStopIndex = 0;
+        tripButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+        renderEditor();
+      });
+    });
+
+    stopList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-stop-index]");
+
+      if (!button) {
+        return;
+      }
+
+      syncFormToData();
+      currentStopIndex = Number(button.dataset.stopIndex);
+      renderEditor();
+    });
+
+    document.getElementById("addStopButton").addEventListener("click", () => {
+      syncFormToData();
+      data[currentTrip].stops.push({
+        stop: "New",
+        date: "Coming soon",
+        title: "New stop",
+        copy: "Write the memory here.",
+        details: ["Place", "Favorite", "Mood"],
+        placeholder: true
+      });
+      currentStopIndex = data[currentTrip].stops.length - 1;
+      renderEditor();
+      saveData("Stop added");
+    });
+
+    document.getElementById("duplicateButton").addEventListener("click", () => {
+      syncFormToData();
+      const stops = data[currentTrip].stops;
+      const copy = structuredClone(stops[currentStopIndex]);
+      copy.title = `${copy.title} copy`;
+      stops.splice(currentStopIndex + 1, 0, copy);
+      currentStopIndex += 1;
+      renderEditor();
+      saveData("Stop duplicated");
+    });
+
+    document.getElementById("deleteStopButton").addEventListener("click", () => {
+      const stops = data[currentTrip].stops;
+
+      if (stops.length <= 1) {
+        saveStatus.textContent = "Keep at least one stop.";
+        return;
+      }
+
+      stops.splice(currentStopIndex, 1);
+      currentStopIndex = Math.max(0, currentStopIndex - 1);
+      renderEditor();
+      saveData("Stop deleted");
+    });
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      syncFormToData();
+      renderEditor();
+      saveData();
+    });
+
+    document.getElementById("addPhotoButton").addEventListener("click", () => {
+      syncFormToData();
+      const urlInput = document.getElementById("photoUrlInput");
+      const url = urlInput.value.trim();
+
+      if (!url) {
+        return;
+      }
+
+      const stop = data[currentTrip].stops[currentStopIndex];
+      stop.placeholder = false;
+      stop.photos = stop.photos || [];
+      stop.photos.push({ src: url, alt: `${stop.title} photo` });
+      urlInput.value = "";
+      renderEditor();
+      saveData("Photo added");
+    });
+
+    document.getElementById("photoUploadInput").addEventListener("change", (event) => {
+      const file = event.target.files?.[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        syncFormToData();
+        const stop = data[currentTrip].stops[currentStopIndex];
+        stop.placeholder = false;
+        stop.photos = stop.photos || [];
+        stop.photos.push({ src: reader.result, alt: `${stop.title} photo` });
+        event.target.value = "";
+        renderEditor();
+        saveData("Uploaded photo added");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("photoList").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-delete-photo]");
+
+      if (!button) {
+        return;
+      }
+
+      syncFormToData();
+      const stop = data[currentTrip].stops[currentStopIndex];
+      stop.photos.splice(Number(button.dataset.deletePhoto), 1);
+      if (!stop.photos.length) {
+        stop.placeholder = true;
+      }
+      renderEditor();
+      saveData("Photo deleted");
+    });
+
+    fields.placeholder.addEventListener("change", () => {
+      syncFormToData();
+      renderEditor();
+    });
+
+    document.getElementById("exportButton").addEventListener("click", () => {
+      syncFormToData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "our-journey-backup.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    document.getElementById("resetButton").addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      data = structuredClone(defaultData);
+      currentTrip = "out-of-state";
+      currentStopIndex = 0;
+      tripButtons.forEach((item) => item.classList.toggle("is-active", item.dataset.trip === currentTrip));
+      renderEditor();
+      saveStatus.textContent = "Reset complete. Refresh the main site.";
+    });
+  </script>
+</body>
+</html>
