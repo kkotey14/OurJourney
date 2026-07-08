@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Mouse+Memoirs&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3f2e8;
+      --ink: #1b1916;
+      --muted: #6a655c;
+      --red: #ef2f25;
+      --blue: #225f72;
+      --gold: #f0b62e;
+      --green: #7eb06d;
+      --line: rgba(239, 47, 37, 0.72);
+      --rule: rgba(27, 25, 22, 0.16);
+      --photo-shadow: 0 22px 48px rgba(27, 25, 22, 0.2);
+      --panel: rgba(255, 252, 244, 0.72);
+      --panel-solid: #fffaf0;
+      --soft-red: rgba(239, 47, 37, 0.12);
+      --soft-shadow: 0 18px 42px rgba(27, 25, 22, 0.08);
+      --display: "Anton", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --play: "Mouse Memoirs", "Arial Narrow", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(239, 47, 37, 0.08), transparent 20rem),
+        radial-gradient(circle at 82% 16%, rgba(240, 182, 46, 0.14), transparent 22rem),
+        radial-gradient(circle at 52% 58%, rgba(34, 95, 114, 0.07), transparent 30rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--play);
+      text-rendering: geometricPrecision;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page-top {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 clamp(18px, 4vw, 46px) 0 clamp(18px, 4vw, 46px);
+      background: rgba(243, 242, 232, 0.86);
+      border-bottom: 2px solid rgba(239, 47, 37, 0.12);
+      box-shadow: 0 10px 30px rgba(27, 25, 22, 0.04);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: grid;
+      padding: 17px 0 13px;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: 1.5rem;
+      line-height: 0.78;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .brand span:last-child {
+      padding-left: 17px;
+    }
+
+    .page-top > span:last-child {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      min-width: 150px;
+      padding: 0 28px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--play);
+      font-size: 1.35rem;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    main {
+      padding-top: 64px;
+    }
+
+    .route-section {
+      position: relative;
+      padding: clamp(24px, 4vw, 44px) clamp(18px, 4vw, 48px) clamp(30px, 4vw, 48px);
+    }
+
+    .route-header {
+      max-width: 900px;
+      margin-left: clamp(18px, 6vw, 92px);
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: minmax(260px, 0.64fr) minmax(220px, 0.34fr);
+      align-items: center;
+      gap: clamp(16px, 3vw, 32px);
+      min-height: 28vh;
+      padding-bottom: clamp(16px, 2.5vw, 30px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      color: var(--red);
+      font-family: var(--play);
+      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      transform: rotate(-4deg);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 520px;
+      margin-bottom: 10px;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(3rem, 6.4vw, 5.4rem);
+      font-weight: 400;
+      line-height: 0.88;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .intro-copy {
+      max-width: 440px;
+      margin-bottom: 0;
+      color: var(--ink);
+      font-size: clamp(1rem, 1.15vw, 1.12rem);
+      line-height: 1.05;
+    }
+
+    .intro-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .intro-tags span {
+      padding: 6px 9px;
+      border: 2px solid rgba(27, 25, 22, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--ink);
+      font-size: 0.94rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .passport-note {
+      display: grid;
+      gap: 10px;
+      padding: 15px;
+      border: 2px solid var(--red);
+      border-radius: 24px;
+      background: var(--panel-solid);
+      box-shadow: 7px 7px 0 var(--red);
+      transform: rotate(3deg);
+    }
+
+    .passport-note strong {
+      color: var(--red);
+      font-family: var(--display);
+      font-size: 1.22rem;
+      font-weight: 400;
+      line-height: 0.88;
+      text-transform: uppercase;
+    }
+
+    .passport-note p {
+      margin-bottom: 0;
+      color: var(--ink);
+      font-size: 0.96rem;
+      line-height: 1.05;
+    }
+
+    .stamps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stamps span {
+      padding: 6px 8px;
+      border: 2px solid rgba(239, 47, 37, 0.46);
+      border-radius: 999px;
+      color: var(--red);
+      font-size: 0.92rem;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .travel-switch {
+      max-width: 900px;
+      margin: 0 clamp(18px, 7vw, 110px) clamp(18px, 3vw, 32px) clamp(18px, 6vw, 92px);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 22px);
+      position: relative;
+      z-index: 3;
+    }
+
+    .travel-option {
+      position: relative;
+      min-height: 66px;
+      display: grid;
+      align-content: center;
+      gap: 6px;
+      border: 2px solid var(--red);
+      border-radius: 18px;
+      padding: 11px 15px;
+      background: var(--panel-solid);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transform: rotate(-0.8deg);
+      box-shadow: 7px 7px 0 rgba(239, 47, 37, 0.16);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .travel-option:nth-child(2) {
+      transform: rotate(0.8deg);
+      border-top-right-radius: 34px;
+      border-bottom-left-radius: 34px;
+    }
+
+    .travel-option:hover,
+    .travel-option:focus-visible {
+      transform: translateY(-3px) rotate(0deg);
+      outline: none;
+      box-shadow: 8px 14px 0 rgba(239, 47, 37, 0.24);
+    }
+
+    .travel-option strong {
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(1.18rem, 2vw, 1.75rem);
+      font-weight: 400;
+      line-height: 0.86;
+      text-transform: uppercase;
+    }
+
+    .travel-option span {
+      max-width: 380px;
+      font-size: clamp(0.86rem, 1vw, 0.96rem);
+      line-height: 1.02;
+    }
+
+    .travel-option.is-active {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+
+    .travel-option.is-active strong {
+      color: #fff;
+    }
+
+    .track {
+      position: relative;
+      max-width: 900px;
+      margin-left: clamp(18px, 6vw, 92px);
+      margin-right: clamp(18px, 7vw, 110px);
+      padding: 8px 0 0;
+      isolation: isolate;
+    }
+
+    #flightPath {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .path-line {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 4;
+      stroke-dasharray: 1 18;
+      stroke-linecap: round;
+      opacity: 0.62;
+    }
+
+    #plane {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      width: clamp(72px, 6.5vw, 104px);
+      height: auto;
+      transform-origin: center;
+      filter: drop-shadow(0 10px 0 rgba(239, 47, 37, 0.16));
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .mouse-plane {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 60;
+      width: 42px;
+      height: 42px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate3d(-100px, -100px, 0) rotate(-18deg);
+      transition: opacity 180ms ease;
+      will-change: transform;
+    }
+
+    .mouse-plane.is-visible {
+      opacity: 0.9;
+    }
+
+    .stop {
+      position: relative;
+      z-index: 12;
+      min-height: 300px;
+      display: grid;
+      grid-template-columns: minmax(180px, 280px) minmax(240px, 1fr);
+      align-items: center;
+      gap: clamp(18px, 3vw, 34px);
+      padding: clamp(24px, 3.5vw, 40px) 0;
+    }
+
+    .stop::before {
+      content: attr(data-stop);
+      position: absolute;
+      top: clamp(20px, 4vw, 42px);
+      left: 50%;
+      z-index: -1;
+      color: rgba(239, 47, 37, 0.08);
+      font-family: var(--display);
+      font-size: clamp(3.6rem, 8vw, 7rem);
+      line-height: 0.75;
+      text-transform: uppercase;
+      transform: translateX(-50%) rotate(-2deg);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .stop:nth-of-type(even) {
+      grid-template-columns: minmax(240px, 1fr) minmax(180px, 280px);
+    }
+
+    .stop:nth-of-type(even) .memory-photo {
+      order: 2;
+      transform: rotate(1.5deg);
+      justify-self: end;
+    }
+
+    .stop:nth-of-type(odd) .caption {
+      justify-self: start;
+    }
+
+    .stop:nth-of-type(even) .caption {
+      justify-self: end;
+    }
+
+    .memory-photo {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      width: 100%;
+      max-width: 280px;
+      justify-self: start;
+      border: 0;
+      padding: 0;
+      overflow: visible;
+      border-radius: 8px;
+      background: transparent;
+      transform: rotate(-1.25deg);
+      cursor: pointer;
+    }
+
+    .memory-photo:focus-visible {
+      outline: 3px solid rgba(45, 118, 134, 0.36);
+      outline-offset: 8px;
+    }
+
+    .photo-card {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #ddd;
+      box-shadow: var(--photo-shadow);
+      transition: opacity 260ms ease, transform 300ms ease;
+    }
+
+    .photo-card:nth-child(1) {
+      z-index: 3;
+    }
+
+    .photo-card:nth-child(2) {
+      z-index: 2;
+      transform: translate(13px, 10px) rotate(3deg);
+    }
+
+    .photo-card:nth-child(3) {
+      z-index: 1;
+      transform: translate(24px, 20px) rotate(6deg);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 700ms ease;
+    }
+
+    .photo-card.placeholder-card {
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(135deg, rgba(239, 47, 37, 0.08) 25%, transparent 25%) 0 0 / 22px 22px,
+        linear-gradient(315deg, rgba(239, 47, 37, 0.08) 25%, transparent 25%) 0 0 / 22px 22px,
+        #fff8ef;
+      border: 2px solid var(--red);
+    }
+
+    .photo-card.placeholder-card strong {
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(9rem, 18vw, 17rem);
+      font-weight: 400;
+      line-height: 0.8;
+    }
+
+    .memory-photo:hover .photo-card:first-child img {
+      transform: scale(1.045);
+    }
+
+    .photo-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 10px solid #fff;
+      pointer-events: none;
+    }
+
+    .photo-card.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-12px, -8px) rotate(-4deg);
+    }
+
+    .photo-count {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 5;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .caption {
+      max-width: 380px;
+      padding: clamp(12px, 1.6vw, 16px);
+      border: 2px solid transparent;
+      border-radius: 22px;
+      background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(135deg, transparent, rgba(239, 47, 37, 0.22)) border-box;
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .caption .date {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--red);
+      font-size: clamp(0.94rem, 1.3vw, 1.1rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      transform: rotate(-3deg);
+    }
+
+    .caption .date::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 5px rgba(226, 170, 50, 0.2);
+    }
+
+    .caption h2 {
+      margin-bottom: 8px;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 3.3vw, 3.2rem);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .caption p {
+      max-width: 360px;
+      color: var(--ink);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.06;
+      margin-bottom: 0;
+    }
+
+    .caption dl {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 16px 0 0;
+    }
+
+    .caption div {
+      padding-top: 10px;
+      border-top: 2px solid rgba(239, 47, 37, 0.2);
+    }
+
+    .caption dt {
+      color: var(--red);
+      font-size: 0.86rem;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .caption dd {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    .ending {
+      max-width: 520px;
+      margin: clamp(22px, 4vw, 42px) clamp(18px, 7vw, 110px) 0 auto;
+      padding: clamp(16px, 2.4vw, 24px);
+      border: 2px solid var(--red);
+      border-radius: 28px;
+      background: var(--panel-solid);
+      box-shadow: 12px 12px 0 rgba(239, 47, 37, 0.18);
+      text-align: center;
+      transform: rotate(-1deg);
+    }
+
+    .ending h2 {
+      margin-bottom: 12px;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+      font-weight: 400;
+      line-height: 0.82;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .ending p {
+      margin-bottom: 0;
+      color: var(--ink);
+      font-size: 0.98rem;
+      line-height: 1.04;
+    }
+
+    @media (max-width: 820px) {
+      .page-top {
+        position: static;
+      }
+
+      .page-top > span:last-child {
+        display: none;
+      }
+
+      main {
+        padding-top: 0;
+      }
+
+      .route-header {
+        display: block;
+        min-height: auto;
+        margin: 0 auto;
+      }
+
+      .passport-note {
+        margin-top: 26px;
+      }
+
+      h1 {
+        font-size: clamp(3.1rem, 14vw, 5.4rem);
+      }
+
+      .stop,
+      .stop:nth-of-type(even) {
+        display: block;
+        min-height: auto;
+        padding: 42px 0 58px;
+      }
+
+      .stop:nth-of-type(even) .memory-photo {
+        order: initial;
+      }
+
+      .memory-photo,
+      .stop:nth-of-type(even) .memory-photo {
+        margin-bottom: 24px;
+        transform: none;
+      }
+
+      .caption dl {
+        grid-template-columns: 1fr;
+      }
+
+      .travel-switch {
+        grid-template-columns: 1fr;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .track {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .ending {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #plane {
+        width: 72px;
+      }
+
+      .mouse-plane {
+        width: 34px;
+        height: 34px;
+      }
+    }
+
+    @media (pointer: fine) {
+      body.has-custom-cursor,
+      body.has-custom-cursor button,
+      body.has-custom-cursor a {
+        cursor: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-top" aria-label="Site header">
+    <span class="brand"><span>Our</span><span>Journey</span></span>
+    <span>Scroll the route</span>
+  </header>
+
+  <main>
+    <section class="route-section" id="route">
+      <div class="route-header">
+        <div>
+          <p class="eyebrow">Vacation scrapbook</p>
+          <h1>The route so far</h1>
+          <p class="intro-copy">A simple scroll story for the places you two have been together. Drop in your real photos, rename the stops, and let the plane carry the page from one memory to the next.</p>
+          <div class="intro-tags" aria-label="Journey highlights">
+            <span>Dubai 2024</span>
+            <span>Photo stacks</span>
+            <span>Open slots</span>
+          </div>
+        </div>
+
+        <aside class="passport-note" aria-label="Trip summary">
+          <strong>Current passport</strong>
+          <p>Three favorite stops, a few saved details, and room for every trip that comes next.</p>
+          <div class="stamps" aria-label="Memory tags">
+            <span>Beach</span>
+            <span>Road trip</span>
+            <span>City lights</span>
+          </div>
+        </aside>
+      </div>
+
+      <div class="travel-switch" aria-label="Choose travel type">
+        <button class="travel-option is-active" type="button" data-trip-type="out-of-state" aria-pressed="true">
+          <strong>Out of state travel</strong>
+          <span>Flights, road trips, hotels, and places outside your home state.</span>
+        </button>
+        <button class="travel-option" type="button" data-trip-type="in-state" aria-pressed="false">
+          <strong>In state (USA)</strong>
+          <span>Local weekends, nearby cities, day trips, and favorite spots close to home.</span>
+        </button>
+      </div>
+
+      <div class="track" id="track">
+        <svg id="flightPath" preserveAspectRatio="none" aria-hidden="true">
+          <path class="path-line" id="pathLine" d=""></path>
+        </svg>
+
+        <img id="plane" src="assets/images/plane.png?v=2" alt="" aria-hidden="true">
+
+        <article class="stop" data-stop="Dubai">
+          <button class="memory-photo" type="button" aria-label="Show next beach weekend photo">
+            <span class="photo-card">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=82" alt="A beach at sunset with waves rolling in">
+            </span>
+            <span class="photo-card">
+              <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=82" alt="A quiet road through a wide vacation landscape">
+            </span>
+            <span class="photo-card">
+              <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1100&q=82" alt="A tropical beach with blue water">
+            </span>
+            <span class="photo-count">1 / 3</span>
+          </button>
+          <div class="caption">
+            <span class="date">Dubai 2024</span>
+            <h2>Dubai getaway</h2>
+            <p>Skyscraper views, warm nights, desert light, and the kind of city glow that makes every photo feel expensive.</p>
+            <dl>
+              <div>
+                <dt>Place</dt>
+                <dd>Dubai</dd>
+              </div>
+              <div>
+                <dt>Favorite</dt>
+                <dd>Desert</dd>
+              </div>
+              <div>
+                <dt>Mood</dt>
+                <dd>Luxury</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="stop" data-stop="Next">
+          <button class="memory-photo" type="button" aria-label="Future trip placeholder">
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-count">?</span>
+          </button>
+          <div class="caption">
+            <span class="date">Coming soon</span>
+            <h2>?</h2>
+            <p>Journey not added yet. This spot is saved for the next place you two visit together.</p>
+            <dl>
+              <div>
+                <dt>Place</dt>
+                <dd>?</dd>
+              </div>
+              <div>
+                <dt>Favorite</dt>
+                <dd>?</dd>
+              </div>
+              <div>
+                <dt>Mood</dt>
+                <dd>?</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="stop" data-stop="Soon">
+          <button class="memory-photo" type="button" aria-label="Future journey placeholder">
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-count">?</span>
+          </button>
+          <div class="caption">
+            <span class="date">Coming soon</span>
+            <h2>?</h2>
+            <p>Journey not added yet. Keep this card open until you have the next photos and memories.</p>
+            <dl>
+              <div>
+                <dt>Place</dt>
+                <dd>?</dd>
+              </div>
+              <div>
+                <dt>Favorite</dt>
+                <dd>?</dd>
+              </div>
+              <div>
+                <dt>Mood</dt>
+                <dd>?</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+      </div>
+
+      <div class="ending">
+        <h2>Next stop</h2>
+        <p>Add the next trip here when you have the photos. The page is meant to grow one memory at a time.</p>
+      </div>
+    </section>
+  </main>
+
+  <img class="mouse-plane" id="mousePlane" width="100" height="100" src="https://img.icons8.com/carbon-copy/100/paper-plane.png" alt="" aria-hidden="true">
+
+  <script>
+    const track = document.getElementById("track");
+    const svg = document.getElementById("flightPath");
+    const pathEl = document.getElementById("pathLine");
+    const plane = document.getElementById("plane");
+    const travelSwitch = document.querySelector(".travel-switch");
+    const travelOptions = document.querySelectorAll(".travel-option");
+    const introTags = document.querySelector(".intro-tags");
+    const passportNote = document.querySelector(".passport-note");
+    const ending = document.querySelector(".ending");
+    const mousePlane = document.getElementById("mousePlane");
+    let photoStacks = document.querySelectorAll(".memory-photo");
+    const planeState = {
+      current: 0,
+      target: 0,
+      raf: 0,
+      ready: false
+    };
+    const mouseState = {
+      x: -100,
+      y: -100,
+      targetX: -100,
+      targetY: -100,
+      raf: 0
+    };
+    const defaultTripContent = {
+      "out-of-state": {
+        tags: ["Dubai 2024", "Photo stacks", "Open slots"],
+        passportTitle: "Current passport",
+        passportCopy: "Three favorite stops, a few saved details, and room for every trip that comes next.",
+        stamps: ["Dubai", "Flights", "Next trip"],
+        endingTitle: "Next stop",
+        endingCopy: "Add the next trip here when you have the photos. The page is meant to grow one memory at a time.",
+        stops: [
+          {
+            stop: "Dubai",
+            date: "Dubai 2024",
+            title: "Dubai getaway",
+            copy: "Skyscraper views, warm nights, desert light, and the kind of city glow that makes every photo feel expensive.",
+            details: ["Dubai", "Desert", "Luxury"],
+            photos: [
+              {
+                src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=82",
+                alt: "A beach at sunset with waves rolling in"
+              },
+              {
+                src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1100&q=82",
+                alt: "A quiet road through a wide vacation landscape"
+              },
+              {
+                src: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1100&q=82",
+                alt: "A tropical beach with blue water"
+              }
+            ]
+          },
+          {
+            stop: "Next",
+            date: "Coming soon",
+            title: "?",
+            copy: "Journey not added yet. This spot is saved for the next place you two visit together.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          },
+          {
+            stop: "Soon",
+            date: "Coming soon",
+            title: "?",
+            copy: "Journey not added yet. Keep this card open until you have the next photos and memories.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          }
+        ]
+      },
+      "in-state": {
+        tags: ["In state USA", "Local dates", "Open slots"],
+        passportTitle: "Local passport",
+        passportCopy: "A separate lane for nearby weekends, favorite local spots, and easy trips that still deserve their own memories.",
+        stamps: ["Local", "Day trip", "Staycation"],
+        endingTitle: "Local next stop",
+        endingCopy: "Use this side for nearby cities, restaurants, parks, beaches, and any in-state trips you two want to save.",
+        stops: [
+          {
+            stop: "Local",
+            date: "In state",
+            title: "Local memory",
+            copy: "This is reserved for your first in-state trip. Add the photos, city, and favorite detail when you have it.",
+            details: ["Nearby", "Favorite spot", "Easy"],
+            placeholder: true
+          },
+          {
+            stop: "Weekend",
+            date: "Coming soon",
+            title: "?",
+            copy: "A future weekend close to home can live here, separate from the out-of-state travel route.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          },
+          {
+            stop: "Date",
+            date: "Coming soon",
+            title: "?",
+            copy: "Save this one for a local date day, a nearby city, or a place you keep going back to together.",
+            details: ["?", "?", "?"],
+            placeholder: true
+          }
+        ]
+      }
+    };
+    const savedTripContent = (() => {
+      try {
+        return JSON.parse(localStorage.getItem("ourJourneyTrips") || "null");
+      } catch {
+        return null;
+      }
+    })();
+    const tripContent = savedTripContent || defaultTripContent;
+
+    function buildPath() {
+      if (!track) {
+        return;
+      }
+
+      const width = track.clientWidth;
+      const height = track.scrollHeight;
+
+      svg.setAttribute("width", width);
+      svg.setAttribute("height", height);
+      svg.style.height = `${height}px`;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      const segments = getFlightSegments(width, height);
+      const first = segments[0][0];
+      const d = `
+        M ${first.x} ${first.y}
+        ${segments.map(([, p1, p2, p3]) => `C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${p3.x} ${p3.y}`).join(" ")}
+      `;
+
+      pathEl.setAttribute("d", d.trim());
+    }
+
+    function updatePlane() {
+      if (!pathEl || !plane || !pathEl.getAttribute("d")) {
+        return;
+      }
+
+      const trackRect = track.getBoundingClientRect();
+      const travelStart = window.innerHeight * 0.38;
+      const travelDistance = Math.max(trackRect.height - window.innerHeight * 0.55, 1);
+      const trackProgress = Math.min(Math.max((travelStart - trackRect.top) / travelDistance, 0), 1);
+      planeState.target = trackProgress;
+
+      if (!planeState.ready) {
+        planeState.current = planeState.target;
+        renderPlane(planeState.current);
+        planeState.ready = true;
+        return;
+      }
+
+      if (!planeState.raf) {
+        planeState.raf = requestAnimationFrame(animatePlane);
+      }
+    }
+
+    function renderPlane(progress) {
+      const rect = track.getBoundingClientRect();
+      const width = track.clientWidth;
+      const height = track.scrollHeight;
+      const pathLength = pathEl.getTotalLength ? pathEl.getTotalLength() : 0;
+      const distance = pathLength * Math.min(Math.max(progress, 0), 1);
+      const point = pathLength
+        ? pathEl.getPointAtLength(distance)
+        : getFlightPoint(progress, width, height);
+      const sampleDistance = distance >= pathLength - 12 ? Math.max(distance - 12, 0) : Math.min(distance + 12, pathLength);
+      const nextPoint = pathLength
+        ? pathEl.getPointAtLength(sampleDistance)
+        : getFlightPoint(Math.min(progress + 0.01, 1), width, height);
+      const rawAngle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
+      const angle = distance >= pathLength - 12 ? rawAngle + 135 : rawAngle - 45;
+      const x = rect.left + point.x;
+      const y = rect.top + point.y;
+      const planeRect = plane.getBoundingClientRect();
+      const planeWidth = planeRect.width || 86;
+      const planeHeight = planeRect.height || 86;
+
+      plane.style.transform = `translate3d(${x - planeWidth / 2}px, ${y - planeHeight / 2}px, 0) rotate(${angle}deg)`;
+    }
+
+    function cubicPoint(p0, p1, p2, p3, t) {
+      const mt = 1 - t;
+      const mt2 = mt * mt;
+      const t2 = t * t;
+
+      return {
+        x: mt2 * mt * p0.x + 3 * mt2 * t * p1.x + 3 * mt * t2 * p2.x + t2 * t * p3.x,
+        y: mt2 * mt * p0.y + 3 * mt2 * t * p1.y + 3 * mt * t2 * p2.y + t2 * t * p3.y
+      };
+    }
+
+    function getFlightPoint(progress, width, height) {
+      const segments = getFlightSegments(width, height);
+      const scaled = Math.min(Math.max(progress, 0), 1) * segments.length;
+      const segmentIndex = Math.min(Math.floor(scaled), segments.length - 1);
+      const segmentProgress = scaled - segmentIndex;
+      const [p0, p1, p2, p3] = segments[segmentIndex];
+
+      return cubicPoint(p0, p1, p2, p3, segmentProgress);
+    }
+
+    function getFlightSegments(width, height) {
+      const stops = Array.from(track.querySelectorAll(".stop"));
+      const anchors = getRouteAnchors(width, height, stops);
+
+      return anchors.slice(0, -1).map((anchor, index) => {
+        const next = anchors[index + 1];
+        const direction = index % 2 === 0 ? 1 : -1;
+        const verticalGap = Math.max(next.y - anchor.y, 160);
+        const firstSwing = direction > 0 ? width * 1.48 : width * -0.22;
+        const secondSwing = direction > 0 ? width * 1.34 : width * -0.12;
+
+        return [
+          anchor,
+          { x: firstSwing, y: anchor.y + verticalGap * 0.25 },
+          { x: secondSwing, y: next.y - verticalGap * 0.22 },
+          next
+        ];
+      });
+    }
+
+    function getRouteAnchors(width, height, stops) {
+      if (!stops.length) {
+        return [
+          { x: width * 0.16, y: -60 },
+          { x: width * 0.84, y: height + 70 }
+        ];
+      }
+
+      const anchors = [
+        { x: width * 0.14, y: -70 }
+      ];
+
+      stops.forEach((stop, index) => {
+        const centerY = stop.offsetTop + stop.offsetHeight * 0.52;
+        const isRight = index % 2 === 0;
+        anchors.push({
+          x: width * (isRight ? 0.96 : 0.08),
+          y: centerY
+        });
+      });
+
+      anchors.push({
+        x: width * (stops.length % 2 === 0 ? 0.82 : 0.18),
+        y: height + 78
+      });
+
+      return anchors;
+    }
+
+    function animatePlane() {
+      if (!pathEl || !plane || !pathEl.getAttribute("d")) {
+        planeState.raf = 0;
+        return;
+      }
+
+      planeState.current += (planeState.target - planeState.current) * 0.085;
+
+      const progress = Math.min(Math.max(planeState.current, 0), 1);
+      renderPlane(progress);
+
+      if (Math.abs(planeState.target - planeState.current) > 0.001) {
+        planeState.raf = requestAnimationFrame(animatePlane);
+      } else {
+        planeState.current = planeState.target;
+        planeState.raf = 0;
+      }
+    }
+
+    function initRoute() {
+      buildPath();
+      updatePlane();
+    }
+
+    function scheduleRouteInit() {
+      initRoute();
+      requestAnimationFrame(initRoute);
+      window.setTimeout(initRoute, 120);
+    }
+
+    function renderPhotoStack(stop) {
+      if (stop.placeholder) {
+        return `
+          <button class="memory-photo" type="button" aria-label="Future journey placeholder" data-placeholder="true">
+            <span class="photo-card placeholder-card">
+              <strong>?</strong>
+            </span>
+            <span class="photo-count">?</span>
+          </button>
+        `;
+      }
+
+      return `
+        <button class="memory-photo" type="button" aria-label="Show next ${stop.title} photo">
+          ${stop.photos.map((photo) => `
+            <span class="photo-card">
+              <img src="${photo.src}" alt="${photo.alt}">
+            </span>
+          `).join("")}
+          <span class="photo-count">1 / ${stop.photos.length}</span>
+        </button>
+      `;
+    }
+
+    function renderStop(stop) {
+      return `
+        <article class="stop" data-stop="${stop.stop}">
+          ${renderPhotoStack(stop)}
+          <div class="caption">
+            <span class="date">${stop.date}</span>
+            <h2>${stop.title}</h2>
+            <p>${stop.copy}</p>
+            <dl>
+              <div>
+                <dt>Place</dt>
+                <dd>${stop.details[0]}</dd>
+              </div>
+              <div>
+                <dt>Favorite</dt>
+                <dd>${stop.details[1]}</dd>
+              </div>
+              <div>
+                <dt>Mood</dt>
+                <dd>${stop.details[2]}</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+      `;
+    }
+
+    function bindPhotoStacks() {
+      photoStacks = document.querySelectorAll(".memory-photo");
+
+      photoStacks.forEach((stack) => {
+        stack.dataset.activeIndex = "0";
+
+        if (stack.dataset.placeholder === "true") {
+          return;
+        }
+
+        updatePhotoStack(stack, 0);
+
+        stack.addEventListener("click", () => {
+          const cards = stack.querySelectorAll(".photo-card");
+          const nextIndex = (Number(stack.dataset.activeIndex) + 1) % cards.length;
+          stack.dataset.activeIndex = String(nextIndex);
+          updatePhotoStack(stack, nextIndex);
+        });
+      });
+    }
+
+    function renderTrip(type) {
+      const content = tripContent[type] || tripContent["out-of-state"];
+
+      introTags.innerHTML = content.tags.map((tag) => `<span>${tag}</span>`).join("");
+      passportNote.querySelector("strong").textContent = content.passportTitle;
+      passportNote.querySelector("p").textContent = content.passportCopy;
+      passportNote.querySelector(".stamps").innerHTML = content.stamps.map((stamp) => `<span>${stamp}</span>`).join("");
+      track.querySelectorAll(".stop").forEach((stop) => stop.remove());
+      track.insertAdjacentHTML("beforeend", content.stops.map(renderStop).join(""));
+      ending.querySelector("h2").textContent = content.endingTitle;
+      ending.querySelector("p").textContent = content.endingCopy;
+      bindPhotoStacks();
+      planeState.ready = false;
+      scheduleRouteInit();
+    }
+
+    function updatePhotoStack(stack, activeIndex) {
+      const cards = stack.querySelectorAll(".photo-card");
+      const counter = stack.querySelector(".photo-count");
+
+      cards.forEach((card, index) => {
+        const relativeIndex = (index - activeIndex + cards.length) % cards.length;
+        card.classList.toggle("is-hidden", relativeIndex > 2);
+        card.style.zIndex = String(cards.length - relativeIndex);
+        card.style.transform = relativeIndex === 0
+          ? "translate(0, 0) rotate(0deg)"
+          : `translate(${relativeIndex * 12}px, ${relativeIndex * 10}px) rotate(${relativeIndex * 3}deg)`;
+      });
+
+      counter.textContent = `${activeIndex + 1} / ${cards.length}`;
+    }
+
+    travelSwitch.addEventListener("click", (event) => {
+      const option = event.target.closest(".travel-option");
+
+      if (option) {
+        const type = option.dataset.tripType;
+
+        travelOptions.forEach((item) => {
+          const isSelected = item === option;
+          item.classList.toggle("is-active", isSelected);
+          item.setAttribute("aria-pressed", String(isSelected));
+        });
+        option.classList.add("is-active");
+        renderTrip(type);
+      }
+    });
+
+    renderTrip("out-of-state");
+
+    function animateMousePlane() {
+      mouseState.x += (mouseState.targetX - mouseState.x) * 0.24;
+      mouseState.y += (mouseState.targetY - mouseState.y) * 0.24;
+      mousePlane.style.transform = `translate3d(${mouseState.x - 8}px, ${mouseState.y - 34}px, 0) rotate(-18deg)`;
+
+      if (Math.abs(mouseState.targetX - mouseState.x) > 0.2 || Math.abs(mouseState.targetY - mouseState.y) > 0.2) {
+        mouseState.raf = requestAnimationFrame(animateMousePlane);
+      } else {
+        mouseState.raf = 0;
+      }
+    }
+
+    function movePointerPlane(x, y) {
+      mouseState.targetX = x;
+      mouseState.targetY = y;
+      mousePlane.classList.add("is-visible");
+
+      if (!mouseState.raf) {
+        mouseState.raf = requestAnimationFrame(animateMousePlane);
+      }
+    }
+
+    if (window.matchMedia("(pointer: fine)").matches) {
+      document.body.classList.add("has-custom-cursor");
+
+      window.addEventListener("mousemove", (event) => {
+        movePointerPlane(event.clientX, event.clientY);
+      }, { passive: true });
+
+      window.addEventListener("mouseleave", () => {
+        mousePlane.classList.remove("is-visible");
+      });
+    }
+
+    window.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+
+      if (touch) {
+        movePointerPlane(touch.clientX, touch.clientY);
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchmove", (event) => {
+      const touch = event.touches[0];
+
+      if (touch) {
+        movePointerPlane(touch.clientX, touch.clientY);
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchend", () => {
+      mousePlane.classList.remove("is-visible");
+    }, { passive: true });
+
+    window.addEventListener("resize", initRoute);
+    window.addEventListener("scroll", updatePlane, { passive: true });
+    window.addEventListener("load", scheduleRouteInit);
+    scheduleRouteInit();
+  </script>
+</body>
+</html>
